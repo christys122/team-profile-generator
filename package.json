@@ -18,5 +18,8 @@
   "homepage": "https://github.com/christys122/team-profile-generator#readme",
   "devDependencies": {
     "jest": "^28.1.2"
+  },
+  "directories": {
+    "lib": "lib"
   }
 }
