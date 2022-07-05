@@ -9,11 +9,11 @@ test ('creates a new employee object', () => {
     expect(employee.id).toEqual(expect.any(Number));
 });
 
-test('gets employee type as an object', () => {
-    const employee = new Employee('Nick');
-    expect(employee.getType()).toBe('type');
-    //expect(employee.getType()).toBe('icon');
+// test('gets employee type as an object', () => {
+//     const employee = new Employee('Nick');
+//     expect(employee.getRole()).toBe('Manager');
+//     //expect(employee.getType()).toBe('icon');
     
-});
+// });
 
 
