@@ -7,6 +7,7 @@ test ('creates a new employee object', () => {
     expect(employee.title).toBe('Manager');
     expect(employee.email).toBe('nick@example.com');
     expect(employee.id).toEqual(expect.any(Number));
+    expect(employee.getrole()).toBe('Employee');
 });
 
 // test('gets employee type as an object', () => {
