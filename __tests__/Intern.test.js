@@ -5,6 +5,6 @@ test('creates Intern object', () => {
 
     expect(intern.role).toBe('Intern')
     expect(intern.name).toBe('Steve');
-    expect(intern.id).toEqual(anyNumber);
-    expect(intern.email).toBe('nick@example.com')
+    expect(intern.id).toEqual(expect.any(Number));
+    expect(intern.email).toBe('steve@example.com')
 });
