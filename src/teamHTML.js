@@ -1,27 +1,23 @@
-// const Employee = require('./lib/Employee');
-// const Engineer = require('./lib/Manager');
-// const Manager = require('./lib/Engineer');
-// const Intern = require('./lib/Intern');
+
 const team = require('../index');
-const TeamHTML = require('./teamHTML');
 
-
-
-    const generateTeam = (team) => {
-        const html = []
+const generateTeam = (team) => {
+    const html = []
         const generateManager = manager => {
             console.log(manager);
             let managerHTML = `
             <div class="card" style="width: 18rem;">
-                <div class="card-header">
-                ${manager.name} <br/>
-                <i class="manager"></i><strong>Manager</strong></div>
-                <ul class="list-group list-group-flush">
-                <li class="list-group-item">ID: ${manager.id}</li>
-                <li class="list-group-item">Email: <span id="email"><a href="mail:${manager.email}">${manager.email}</a></span></li>
-                <li class="list-group-item">Office Number: ${manager.officeNumber}</li>
-                </ul>
-                </div>
+        <div class="card-header">
+          <h1> ${manager.name}</h1> </br>
+          <p>Manager</p>
+        </div>
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item">ID: ${manager.id}</li>
+          <li class="list-group-item">Email:<span> <span id="email"><a href="mail:${manager.email}">${manager.email}</a></span></span></li>
+          <li class="list-group-item">Office number: ${manager.officeNumber}</li>
+        </ul>
+      </div>
+            
             `;
             html.push(managerHTML)
         }
@@ -29,15 +25,16 @@ const TeamHTML = require('./teamHTML');
             console.log(engineer);
             let engineerHTML = `
             <div class="card" style="width: 18rem;">
-                <div class="card-header">
-                ${engineer.name} <br/>
-                <i class="engineer"></i><strong>Engineer</strong></div>
-                <ul class="list-group list-group-flush">
-                <li class="list-group-item">ID: ${engineer.id}</li>
-                <li class="list-group-item">Email: <span id="email"><a href="mail:${engineer.email}">${engineer.email}</a></span></li>
-                <li class="list-group-item">Github: ${engineer.github}</li>
-                </ul>
-                </div>
+        <div class="card-header">
+          <h1>${engineer.name}</h1> </br>
+          <p>Engineer</p>
+        </div>
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item">ID: ${engineer.id}</li>
+          <li class="list-group-item">Email:<span>id="email"><a href="mail:${engineer.email}">${engineer.email}</a></span></span></li>
+          <li class="list-group-item">Git Hub: ${engineer.github}</li>
+        </ul>
+      </div>
             `;
             html.push(engineerHTML)
         }
@@ -45,26 +42,27 @@ const TeamHTML = require('./teamHTML');
             console.log(intern);
             let internHTML = `
             <div class="card" style="width: 18rem;">
-                <div class="card-header">
-                ${intern.name} <br/>
-                <i class="manager"></i><strong>Intern</strong></div>
-                <ul class="list-group list-group-flush">
-                <li class="list-group-item">ID: ${intern.id}</li>
-                <li class="list-group-item">Email: <span id="email"><a href="mail:${intern.email}">${intern.email}</a></span></li>
-                <li class="list-group-item">School: ${intern.school}</li>
-                </ul>
-                </div>
+        <div class="card-header">
+          <h1>${intern.name}</h1> </br>
+          <p>Intern</p>
+        </div>
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item">ID: ${intern.id}</li>
+          <li class="list-group-item">Email: <a href="mail:${intern.email}">${intern.email}</a></span></li>
+          <li class="list-group-item">School: ${intern.school}</li>
+        </ul>
+     </div>
             `;
             html.push(internHTML)
         }
-    
-        
+           
     // For loop to add employees 
     const addTeam = function() {
-        if (team.length === 0) {
-            console.log("no employees");
-            return;
-        }
+    //     if (team.length === 0) {
+    //         console.log("no employees");
+    //         return;
+    //     }
+       getRole(team) 
     for (let i = 0; i < team.length; i ++) {
         if(team[i].getRole() === "Manager") {
             generateManager(team[i]);
@@ -84,6 +82,7 @@ addTeam()
 
     module.exports = team => {
         //missing?
+        //const { manager, engineer, intern } = html;
         return `
         <!DOCTYPE html>
         <html lang="en">
@@ -91,17 +90,19 @@ addTeam()
             <meta charset="UTF-8">
             <meta http-equiv="X-UA-Compatible" content="IE=edge">
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <link rel="stylesheet" href="style.css">
-            <title>Team Profile Generator</title>
+            <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+            integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+              <title>Team Generator</title>
         </head>
         <body>
-            <header>
-            <h1> My Team </h1>
-            </header>
-            <main> ${generateTeam(team)} </main>
+        <header class="h1 pb-2 mb-4 text-danger border-bottom border-danger">My Team</header>
+        <main class="d-flex flex-row mb-3 justify-content-around">
+        ${generateTeam(team)}
+        
+        </main>
         </body>
         </html>
         `;
     }
-    }
-    //addTeam()
+}
+    

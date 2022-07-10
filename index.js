@@ -1,7 +1,7 @@
 const inquirer = require('inquirer');
 const fs = require('fs');
 const path = require('path');
-const generateHTML = require('./src/teamHTML');
+//const generateHTML = require('./src/teamHTML');
 const Manager = require('./lib/Manager');
 const Engineer = require('./lib/Engineer');
 const Intern = require('./lib/Intern');
@@ -71,9 +71,9 @@ const promptEmployee = () => {
                 case 'Intern':
                     promptIntern();
                     break;
-                case 'End Task':
+                default: ''
                     saveData();
-                    break;
+                    
             }
         });
 };
@@ -116,7 +116,8 @@ const promptIntern = () => {
             type: 'input',
             name: 'name',
             Message: 'Enter Interns Name',
-
+        },
+        {
             type: 'input',
             name: 'id',
             message: 'Enter the employee id'
@@ -143,11 +144,11 @@ const promptIntern = () => {
     })
 
 };
-   const saveData = () => {
-        const pageData = generateHTML(employees);
-        fs.writefile('./index.html', pageData)
-            console.log(employees);
-
+    const saveData = () => {
+//         const pageData = generateHTML(employees);
+//         fs.writefileSync('./index.html', pageData)
+//             console.log(employees);
+console.log('success!')
    };
    
          startApp() 
