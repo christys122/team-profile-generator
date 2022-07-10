@@ -1,26 +1,18 @@
 const inquirer = require('inquirer');
+const fs = require('fs');
+const path = require('path');
+const generateHTML = require('./src/teamHTML');
 const Manager = require('./lib/Manager');
 const Engineer = require('./lib/Engineer');
 const Intern = require('./lib/Intern');
 const Employee = require('./lib/Employee');
 
-const team = [];
-
-
-//     this.employees = [];
-//     this.currentEmployee;
-
+const employees = [];
 
 
 const startApp = () => {
 
-    //  this.employees.push(new Employee('Manager', 'office number'));
-    //  this.employees.push(new Employee('Engineer', 'git hub'));
-    //  this.employees.push(new Employee('Intern', 'school'));
-
-    //  this.currentEmployee = this.employees[0];
-
-    return inquirer
+     return inquirer
         .prompt([
             {
                 type: 'input',
@@ -56,18 +48,16 @@ const startApp = () => {
         ])
         .then(data => {
             const manager = new Manager(data.name, data.id, data.email, data.officeNumber);
-            team.push(manager);
+            employees.push(manager);
             promptEmployee();
             
-
         })
-}
+    }
 
 const promptEmployee = () => {
     return inquirer
         .prompt([
             {
-               // if (this.employee) {
                 type: 'list',
                 message: 'Enter another employee?',
                 name: 'action',
@@ -81,8 +71,9 @@ const promptEmployee = () => {
                 case 'Intern':
                     promptIntern();
                     break;
-                default:
-                    runHTML();
+                case 'End Task':
+                    saveData();
+                    break;
             }
         });
 };
@@ -110,12 +101,11 @@ const promptEngineer = () => {
                 type: 'input',
                 name: 'github',
                 message: 'Enter the Git Hub username'
-
             }
 
 ]).then(data => {
     const engineer = new Engineer(data.name, data.id, data.email, data.github);
-    team.push(engineer);
+    employees.push(engineer);
     promptEmployee();
 })
 };
@@ -148,20 +138,16 @@ const promptIntern = () => {
         
     ]).then(data => {
         const intern = new Intern(data.name, data.id, data.email, data.school);
-        team.push(intern);
+        employees.push(intern);
         promptEmployee();
     })
+
 };
+   const saveData = () => {
+        const pageData = generateHTML(employees);
+        fs.writefile('./index.html', pageData)
+            console.log(employees);
 
-            
-(pageData => {
-    const runHTML = generateHTML(pageData);
-    fswritefile('./index.html', runHTML, err => {
-        if (err) throw new Error(err);
-        return;
-    })
-    console.log('success');
-});
-
-startApp()
-
+   };
+   
+         startApp() 
