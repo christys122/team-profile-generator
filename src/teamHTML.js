@@ -1,11 +1,13 @@
 
 const team = require('../index');
 
+
+//create manager part of html 
 const generateTeam = (team) => {
-    const html = []
-        const generateManager = manager => {
-            console.log(manager);
-            let managerHTML = `
+  const html = []
+  const generateManager = manager => {
+
+    let managerHTML = `
             <div class="card" style="width: 18rem;">
         <div class="card-header">
           <h1> ${manager.name}</h1> </br>
@@ -19,11 +21,14 @@ const generateTeam = (team) => {
       </div>
             
             `;
-            html.push(managerHTML)
-        }
-        const generateEngineer = engineer => {
-            console.log(engineer);
-            let engineerHTML = `
+            
+    html.push(managerHTML)
+  }
+
+  //create rest of html using manager and intern
+  const generateEngineer = engineer => {
+    console.log(engineer);
+    let engineerHTML = `
             <div class="card" style="width: 18rem;">
         <div class="card-header">
           <h1>${engineer.name}</h1> </br>
@@ -36,11 +41,11 @@ const generateTeam = (team) => {
         </ul>
       </div>
             `;
-            html.push(engineerHTML)
-        }
-        const generateIntern = intern => {
-            console.log(intern);
-            let internHTML = `
+    html.push(engineerHTML)
+  }
+  const generateIntern = intern => {
+    console.log(intern);
+    let internHTML = `
             <div class="card" style="width: 18rem;">
         <div class="card-header">
           <h1>${intern.name}</h1> </br>
@@ -53,37 +58,29 @@ const generateTeam = (team) => {
         </ul>
      </div>
             `;
-            html.push(internHTML)
-        }
-           
-    // For loop to add employees 
-    const addTeam = function() {
-    //     if (team.length === 0) {
-    //         console.log("no employees");
-    //         return;
-    //     }
-       getRole(team) 
-    for (let i = 0; i < team.length; i ++) {
-        if(team[i].getRole() === "Manager") {
-            generateManager(team[i]);
-        }
-        if(team[i].getRole() === "Engineer") {
-            generateEngineer(team[i]);
-        }
-        if(team[i].getRole() === "Intern") {
-            generateIntern(team[i]);
-        }
+    html.push(internHTML)
+  }
+
+  // For loop to add employees 
+  const addTeam = function () {
     
+    generateManager(team.manager);
+    for (const eng of team.engineers)
+      generateEngineer(eng);
+    for (const int of team.interns)
+      generateIntern(int);
+
     return html.join('');
-    }
-    }
-
+  }
+  
 addTeam()
+}
 
-    module.exports = team => {
-        //missing?
-        //const { manager, engineer, intern } = html;
-        return `
+
+module.exports = team => {
+  //sets up html
+  
+  return `
         <!DOCTYPE html>
         <html lang="en">
         <head>
@@ -103,6 +100,6 @@ addTeam()
         </body>
         </html>
         `;
-    }
 }
-    
+
+

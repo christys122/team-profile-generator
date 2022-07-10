@@ -1,18 +1,20 @@
 const inquirer = require('inquirer');
 const fs = require('fs');
 const path = require('path');
-//const generateHTML = require('./src/teamHTML');
+const generateHTML = require('./src/teamHTML');
 const Manager = require('./lib/Manager');
 const Engineer = require('./lib/Engineer');
 const Intern = require('./lib/Intern');
 const Employee = require('./lib/Employee');
 
-const employees = [];
+//set up manager and arrays for other employees
+
+const employees = { manager: {}, engineers: [], interns: [] };
 
 
 const startApp = () => {
-
-     return inquirer
+// start questions
+    return inquirer
         .prompt([
             {
                 type: 'input',
@@ -22,7 +24,6 @@ const startApp = () => {
                     if (nameInput) {
                         return true
                     } else {
-                        console.log('Enter the Managers name');
                         return false;
                     }
                 }
@@ -47,13 +48,13 @@ const startApp = () => {
             },
         ])
         .then(data => {
-            const manager = new Manager(data.name, data.id, data.email, data.officeNumber);
-            employees.push(manager);
-            promptEmployee();
-            
-        })
-    }
+            employees.manager = new Manager(data.name, data.id, data.email, data.officeNumber);
 
+            promptEmployee();
+
+        })
+}
+// ask if more engineers and iterns or complete task
 const promptEmployee = () => {
     return inquirer
         .prompt([
@@ -73,7 +74,7 @@ const promptEmployee = () => {
                     break;
                 default: ''
                     saveData();
-                    
+
             }
         });
 };
@@ -103,26 +104,28 @@ const promptEngineer = () => {
                 message: 'Enter the Git Hub username'
             }
 
-]).then(data => {
-    const engineer = new Engineer(data.name, data.id, data.email, data.github);
-    employees.push(engineer);
-    promptEmployee();
-})
+        ]).then(data => {
+            const engineer = new Engineer(data.name, data.id, data.email, data.github);
+            
+            employees.engineers.push(engineer);
+            
+            promptEmployee();
+        })
 };
 const promptIntern = () => {
     return inquirer
-    .prompt([
-        {
-            type: 'input',
-            name: 'name',
-            Message: 'Enter Interns Name',
-        },
-        {
-            type: 'input',
-            name: 'id',
-            message: 'Enter the employee id'
-            //validate
-        },
+        .prompt([
+            {
+                type: 'input',
+                name: 'name',
+                Message: 'Enter Interns Name'
+            },
+            {
+                type: 'input',
+                name: 'id',
+                message: 'Enter the employee id'
+                //validate
+            },
             {
                 type: 'input',
                 name: 'email',
@@ -135,20 +138,21 @@ const promptIntern = () => {
                 message: 'Enter the school name'
 
             }
-            
-        
-    ]).then(data => {
-        const intern = new Intern(data.name, data.id, data.email, data.school);
-        employees.push(intern);
-        promptEmployee();
-    })
+
+
+        ]).then(data => {
+            const intern = new Intern(data.name, data.id, data.email, data.school);
+            employees.interns.push(intern);
+            promptEmployee();
+        })
 
 };
-    const saveData = () => {
-//         const pageData = generateHTML(employees);
-//         fs.writefileSync('./index.html', pageData)
-//             console.log(employees);
-console.log('success!')
-   };
-   
-         startApp() 
+//generate html
+const saveData = () => {
+            const pageData = generateHTML(employees);
+            fs.writeFileSync('./gen-index.html', pageData)
+            
+     
+};
+
+startApp() 
